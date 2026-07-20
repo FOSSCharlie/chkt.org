@@ -133,20 +133,20 @@
     margin-top: 8px;
   }
 
-  /* ---------- Live demo glass card ---------- */
-  .demo-card {
-    background: var(--glass);
+  /* ---------- Live demo: faithful mini-recreation of the real app ---------- */
+  .demo-frame {
+    background: rgba(255,255,255,0.03);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    text-align: left;
-    padding: 6px 0;
+    padding: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
     margin-bottom: 36px;
     position: relative;
+    text-align: left;
   }
-  .demo-card::before {
+  .demo-frame::before {
     content: '';
     position: absolute;
     inset: -1px;
@@ -159,78 +159,123 @@
     pointer-events: none;
   }
 
-  .demo-row {
+  .demo-addrow {
     display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .demo-addrow input[type="text"], .demo-addrow input[type="date"] {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 9px 12px;
+  }
+  .demo-addrow input[type="text"] { flex: 1; min-width: 0; }
+  .demo-addrow input[type="text"]::placeholder { color: var(--ink-faint); }
+  .demo-addrow input[type="date"] { color-scheme: dark; width: 150px; flex-shrink: 0; }
+  .demo-addbtn {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.82rem;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color var(--transition);
+  }
+  .demo-addbtn:hover { background: #1976D2; }
+
+  .demo-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .demo-section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    margin: 18px 0 10px;
+  }
+
+  .demo-task {
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
     align-items: center;
     gap: 12px;
-    padding: 14px 20px;
+    padding: 14px;
+    background: rgba(255,255,255,0.045);
+    border-radius: 10px;
+    border-left: 4px solid var(--ink-faint);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
-  .demo-row + .demo-row { border-top: 1px solid var(--line); }
+  .demo-task.urgency-overdue { border-left-color: #dc2626; }
+  .demo-task.urgency-today   { border-left-color: #ea580c; }
+  .demo-task.urgency-soon    { border-left-color: var(--yellow); }
+  .demo-task.done            { border-left-color: var(--glass-border); }
 
   .demo-checkbox {
-    width: 19px; height: 19px;
-    border: 1.5px solid var(--blue);
-    border-radius: 6px;
+    width: 18px; height: 18px;
+    border: 1px solid var(--blue);
+    border-radius: 4px;
     flex-shrink: 0;
     background: transparent;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     padding: 0;
-    transition: background-color var(--transition), box-shadow var(--transition);
+    transition: background-color var(--transition);
   }
-  .demo-checkbox svg { width: 10px; height: 10px; stroke: var(--blue); stroke-width: 3; fill: none; opacity: 0; transition: opacity var(--transition); }
-  .demo-checkbox.checked { background: rgba(33,150,243,0.15); box-shadow: 0 0 12px rgba(33,150,243,0.35); }
+  .demo-checkbox svg { width: 8px; height: 8px; stroke: var(--blue); stroke-width: 3; fill: none; opacity: 0; transition: opacity var(--transition); }
   .demo-checkbox.checked svg { opacity: 1; }
-  .demo-checkbox:hover { background: rgba(33,150,243,0.12); }
+  .demo-checkbox:hover { background: rgba(33,150,243,0.1); }
 
+  .demo-content { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
   .demo-text {
-    flex: 1;
-    font-size: 0.93rem;
-    text-align: left;
+    font-size: 0.9rem;
     color: var(--ink);
-    transition: opacity var(--transition), color var(--transition);
+    overflow-wrap: break-word;
   }
-  .demo-row.done .demo-text { text-decoration: line-through; color: var(--ink-faint); opacity: 0.75; }
+  .demo-task.done .demo-text { text-decoration: line-through; opacity: 0.7; }
 
   .demo-badge {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    padding: 3px 8px;
-    border-radius: 6px;
-    color: #0B0E14;
-    white-space: nowrap;
-    flex-shrink: 0;
+    display: inline-flex;
+    align-self: flex-start;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 20px;
+    color: #fff;
+    width: fit-content;
   }
-  .demo-badge.overdue { background: #FF6B6B; color: #2A0000; }
-  .demo-badge.today   { background: #FFA94D; }
-  .demo-badge.soon    { background: var(--yellow); }
-  .demo-badge.done    { background: transparent; color: var(--ink-faint); opacity: 0.8; padding-left: 0; }
+  .demo-badge.overdue { background: #dc2626; }
+  .demo-badge.today   { background: #ea580c; }
+  .demo-badge.soon    { background: var(--yellow); color: #1a1a1a; }
+  .demo-badge.done    { background: transparent; color: var(--ink-faint); opacity: 0.7; padding-left: 0; font-weight: 500; }
 
   .demo-dot {
-    width: 11px; height: 11px;
+    width: 10px; height: 10px;
     border-radius: 50%;
-    background: var(--red);
-    box-shadow: 0 0 10px rgba(255,92,92,0.5);
+    background: #ff4444;
     border: none;
     flex-shrink: 0;
     cursor: pointer;
     padding: 0;
     transition: transform var(--transition), opacity var(--transition);
   }
-  .demo-dot:hover { transform: scale(1.3); }
+  .demo-dot:hover { transform: scale(1.3); opacity: 0.85; }
   .demo-dot.confirming {
-    width: auto; height: 22px;
-    padding: 0 9px;
-    border-radius: 11px;
-    background: var(--red);
-    color: #2A0000;
-    font-size: 0.62rem;
+    width: auto; height: 20px;
+    padding: 0 8px;
+    border-radius: 10px;
+    background: #ff4444;
+    color: #fff;
+    font-size: 0.65rem;
     font-weight: 700;
-    line-height: 22px;
+    line-height: 20px;
     white-space: nowrap;
-    box-shadow: 0 0 14px rgba(255,92,92,0.5);
   }
 
   .demo-hint {
@@ -422,10 +467,17 @@
     <img class="logo-mark" src="data:image/png;base64,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" alt="CHKT logo">
     <div class="eyebrow-pill"><span class="dot"></span>SELF-HOSTED · OPEN SOURCE</div>
     <h1 class="wordmark">CHKT</h1>
-    <p class="tagline">A stupidly simple todo list, sorted by due date.<span class="domain">chkt.org</span></p>
+    <p class="tagline">A stupidly simple todo list.<span class="domain">chkt.org</span></p>
 
-    <div class="demo-card" id="demoCard"></div>
-    <p class="demo-hint">↑ that's the whole interface. Try clicking a checkbox or the red dot.</p>
+    <div class="demo-frame">
+      <div class="demo-addrow">
+        <input type="text" id="demoNewText" placeholder="What needs to be done?">
+        <input type="date" id="demoNewDate">
+        <button type="button" class="demo-addbtn" id="demoAddBtn">Add</button>
+      </div>
+      <div class="demo-list" id="demoCard"></div>
+    </div>
+    <p class="demo-hint">↑ that's the whole interface. Try adding a task, or clicking a checkbox or the red dot.</p>
 
     <div class="cta-row">
       <a class="btn btn-primary" href="https://github.com/FOSSCharlie/chkt" target="_blank" rel="noopener">View on GitHub</a>
@@ -535,76 +587,152 @@ services:
 
 <script>
 (function () {
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function addDays(base, n) {
+    var d = new Date(base + 'T00:00:00');
+    d.setDate(d.getDate() + n);
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function daysUntil(dateStr) {
+    var today = new Date(todayStr() + 'T00:00:00');
+    var target = new Date(dateStr + 'T00:00:00');
+    return Math.round((target - today) / 86400000);
+  }
+  function urgencyOf(dateStr) {
+    var diff = daysUntil(dateStr);
+    if (diff < 0) return 'overdue';
+    if (diff === 0) return 'today';
+    if (diff <= 3) return 'soon';
+    return 'later';
+  }
+  function formatDate(dateStr) {
+    var d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+  function dueBadgeText(dateStr) {
+    var diff = daysUntil(dateStr);
+    var label = formatDate(dateStr);
+    if (diff < 0) return Math.abs(diff) + 'd overdue \u00b7 ' + label;
+    if (diff === 0) return 'Due today \u00b7 ' + label;
+    if (diff === 1) return 'Due tomorrow \u00b7 ' + label;
+    return 'Due ' + label + ' \u00b7 ' + diff + 'd';
+  }
+
+  var today = todayStr();
+  var nextId = 5;
   var demoTasks = [
-    { id: 1, text: 'Ship v1.6.0', badge: 'today', badgeText: 'TODAY', done: false },
-    { id: 2, text: 'Write the changelog', badge: 'soon', badgeText: 'SOON', done: false },
-    { id: 3, text: 'Renew chkt.org', badge: 'done', badgeText: '', done: true },
-    { id: 4, text: 'Reply to that email', badge: 'overdue', badgeText: 'OVERDUE', done: false }
+    { id: 1, text: 'Reply to email', dueDate: addDays(today, -3), completed: false, completedDate: null },
+    { id: 2, text: 'Ship v1.6.0', dueDate: today, completed: false, completedDate: null },
+    { id: 3, text: 'Write the changelog', dueDate: addDays(today, 1), completed: false, completedDate: null },
+    { id: 4, text: 'Renew chkt.org', dueDate: addDays(today, 2), completed: true, completedDate: today }
   ];
   var confirmingId = null;
-  var card = document.getElementById('demoCard');
+  var listEl = document.getElementById('demoCard');
 
-  function render() {
-    card.innerHTML = '';
-    demoTasks.forEach(function (t) {
-      var row = document.createElement('div');
-      row.className = 'demo-row' + (t.done ? ' done' : '');
+  function buildTaskEl(t) {
+    var urgency = t.completed ? null : urgencyOf(t.dueDate);
+    var row = document.createElement('div');
+    row.className = 'demo-task' + (t.completed ? ' done' : ' urgency-' + urgency);
 
-      var cb = document.createElement('button');
-      cb.type = 'button';
-      cb.className = 'demo-checkbox' + (t.done ? ' checked' : '');
-      cb.setAttribute('aria-label', t.done ? 'Mark not done' : 'Mark done');
-      cb.innerHTML = '<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>';
-      cb.addEventListener('click', function () {
-        t.done = !t.done;
-        if (t.done) { t.badge = 'done'; t.badgeText = ''; }
-        else if (t.id === 3) { t.badge = 'soon'; t.badgeText = 'SOON'; }
-        render();
-      });
-
-      var text = document.createElement('span');
-      text.className = 'demo-text';
-      text.textContent = t.text;
-
-      var badge = document.createElement('span');
-      badge.className = 'demo-badge ' + t.badge;
-      badge.textContent = t.badgeText;
-
-      var dot = document.createElement('button');
-      dot.type = 'button';
-      if (confirmingId === t.id) {
-        dot.className = 'demo-dot confirming';
-        dot.textContent = 'Confirm';
-        dot.setAttribute('aria-label', 'Confirm delete');
-        dot.addEventListener('click', function () {
-          demoTasks = demoTasks.filter(function (x) { return x.id !== t.id; });
-          confirmingId = null;
-          render();
-        });
-      } else {
-        dot.className = 'demo-dot';
-        dot.setAttribute('aria-label', 'Delete task');
-        dot.addEventListener('click', function (e) {
-          e.stopPropagation();
-          confirmingId = t.id;
-          render();
-        });
-      }
-
-      row.appendChild(cb);
-      row.appendChild(text);
-      row.appendChild(badge);
-      row.appendChild(dot);
-      card.appendChild(row);
+    var cb = document.createElement('button');
+    cb.type = 'button';
+    cb.className = 'demo-checkbox' + (t.completed ? ' checked' : '');
+    cb.setAttribute('aria-label', t.completed ? 'Mark not done' : 'Mark done');
+    cb.innerHTML = '<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>';
+    cb.addEventListener('click', function () {
+      t.completed = !t.completed;
+      t.completedDate = t.completed ? todayStr() : null;
+      render();
     });
 
-    if (demoTasks.length === 0) {
+    var content = document.createElement('div');
+    content.className = 'demo-content';
+
+    var text = document.createElement('span');
+    text.className = 'demo-text';
+    text.textContent = t.text;
+
+    var badge = document.createElement('span');
+    if (t.completed) {
+      badge.className = 'demo-badge done';
+      badge.textContent = 'Completed ' + formatDate(t.completedDate) + ' \u00b7 was due ' + formatDate(t.dueDate);
+    } else {
+      badge.className = 'demo-badge ' + urgency;
+      badge.textContent = dueBadgeText(t.dueDate);
+    }
+
+    content.appendChild(text);
+    content.appendChild(badge);
+
+    var dot = document.createElement('button');
+    dot.type = 'button';
+    if (confirmingId === t.id) {
+      dot.className = 'demo-dot confirming';
+      dot.textContent = 'Confirm';
+      dot.setAttribute('aria-label', 'Confirm delete');
+      dot.addEventListener('click', function () {
+        demoTasks = demoTasks.filter(function (x) { return x.id !== t.id; });
+        confirmingId = null;
+        render();
+      });
+    } else {
+      dot.className = 'demo-dot';
+      dot.setAttribute('aria-label', 'Delete task');
+      dot.addEventListener('click', function (e) {
+        e.stopPropagation();
+        confirmingId = t.id;
+        render();
+      });
+    }
+
+    row.appendChild(cb);
+    row.appendChild(content);
+    row.appendChild(dot);
+    return row;
+  }
+
+  function render() {
+    listEl.innerHTML = '';
+    var active = demoTasks.filter(function (t) { return !t.completed; })
+      .sort(function (a, b) { return a.dueDate.localeCompare(b.dueDate); });
+    var completed = demoTasks.filter(function (t) { return t.completed; })
+      .sort(function (a, b) { return (b.completedDate || '').localeCompare(a.completedDate || ''); });
+
+    active.forEach(function (t) { listEl.appendChild(buildTaskEl(t)); });
+
+    if (active.length === 0) {
       var empty = document.createElement('div');
-      empty.className = 'demo-row';
-      empty.innerHTML = '<span class="demo-text" style="opacity:0.6;">All clear. Nice work.</span>';
-      card.appendChild(empty);
+      empty.style.cssText = 'text-align:center;padding:20px 0;color:var(--ink-faint);font-size:0.85rem;';
+      empty.textContent = 'All clear. Nice work.';
+      listEl.appendChild(empty);
+    }
+
+    if (completed.length > 0) {
+      var label = document.createElement('div');
+      label.className = 'demo-section-label';
+      label.textContent = 'Completed (' + completed.length + ')';
+      listEl.appendChild(label);
+      completed.forEach(function (t) { listEl.appendChild(buildTaskEl(t)); });
     }
   }
+
+  document.getElementById('demoAddBtn').addEventListener('click', function () {
+    var textInput = document.getElementById('demoNewText');
+    var dateInput = document.getElementById('demoNewDate');
+    var text = textInput.value.trim();
+    if (!text) { textInput.focus(); return; }
+    var due = dateInput.value || todayStr();
+    demoTasks.push({ id: nextId++, text: text, dueDate: due, completed: false, completedDate: null });
+    textInput.value = '';
+    render();
+  });
+  document.getElementById('demoNewText').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('demoAddBtn').click(); }
+  });
+  document.getElementById('demoNewDate').value = today;
 
   document.addEventListener('pointerdown', function (e) {
     if (confirmingId === null) return;
