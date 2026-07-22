@@ -2,6 +2,27 @@
 
 All notable changes to the chkt.org landing page are documented in this file.
 
+## 2026-07-22
+
+### Changed
+- Removed all Google Fonts dependency — no more requests to
+  `fonts.googleapis.com` / `fonts.gstatic.com`. The Inter typeface is
+  now self-hosted: downloaded directly from its official source
+  ([rsms/inter](https://github.com/rsms/inter) on GitHub, SIL Open
+  Font License) and embedded directly in `index.html` as base64, so
+  the page has zero external font requests of any kind.
+- Inter is now used for both headings and body text everywhere on
+  the page (previously headings used a separate display face pulled
+  from Google Fonts). Date badges and the code block remain on the
+  system monospace stack, since that's a distinct fixed-width role
+  Inter doesn't cover.
+- Note: this increases the page size to ~950KB (previously ~35KB),
+  entirely due to the embedded font file. It's a one-time load per
+  visit with no external dependency, but if page weight matters more
+  than eliminating every external request, hosting the font as a
+  separate `.woff2` file alongside `index.html` (rather than inlined)
+  would reduce this while still avoiding Google entirely.
+
 ## 2026-07-21
 
 ### Changed
